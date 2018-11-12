@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.AdminDAO">
+
+
+    <select id="queryById" resultType="Admin" >
+         select * from t_admin where id=#{id}
+    </select>
+    <select id="queryOne" resultType="Admin" >
+         select * from t_admin where username=#{username} and password=#{password}
+    </select>
+    <!-- 添加 -->
+    <insert id="insert" parameterType="Admin">
+        insert into t_admin values(#{id},#{username},#{password})
+    </insert>
+    <!--修改-->
+    <update id="update" parameterType="Admin">
+        update t_admin set  password=#{password} where id =#{id}
+    </update>
+    <!-- 查询 -->
+    <select id="query" resultType="Admin">
+        select id,username,password from t_admin
+    </select>
+    <select id="login" resultType="Admin">
+        select id,username,password from t_admin where username=#{username} and password=#{password}
+    </select>
+
+
+
+</mapper>

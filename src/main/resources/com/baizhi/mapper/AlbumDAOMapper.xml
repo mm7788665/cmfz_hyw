@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.AlbumDAO">
+    <resultMap id="map" type="com.baizhi.entity.Album">
+        <id property="id" column="aid"/>
+        <result property="title" column="atitle"/>
+        <result property="publishDate" column="publishDate"/>
+        <result property="count" column="count"/>
+        <result property="coverImg" column="coverImg"/>
+        <result property="star" column="star"/>
+        <result property="author" column="author"/>
+        <result property="broadCast" column="broadCast"/>
+        <result property="brief" column="brief"/>
+        <collection property="children" ofType="com.baizhi.entity.Chapter">
+            <id property="id" column="id"/>
+            <result property="title" column="title"/>
+            <result property="size" column="size"/>
+            <result property="duration" column="duration"/>
+            <result property="downPath" column="downPath"/>
+            <result property="uploadTime" column="uploadTime"/>
+            <result property="album_id" column="album_id"/>
+        </collection>
+
+    </resultMap>
+
+    <!-- 添加 -->
+    <insert id="insert" parameterType="Album">
+          insert into t_album values (#{id},#{title},#{publishDate},#{count},#{coverImg},#{star},#{author},#{broadCast},#{brief})
+    </insert>
+    <!--  修改-->
+    <update id="update" parameterType="Album">
+        update t_album set id=#{id},title=#{title},publishDate=#{publishDate},count=#{count},coverImg=#{coverImg},star=#{star},author=#{author},broadCast=#{broadCast},brief=#{brief} where id =#{id}
+    </update>
+    <!--删除-->
+    <delete id="delete" parameterType="Album">
+        delete from t_album where id=#{id}
+    </delete>
+    <!-- 查询 -->
+    <select id="queryOne" resultType="Album">
+        select * from t_album where id=#{id}
+    </select>
+    <!--查询所有-->
+    <select id="findByPage" resultMap="map">
+       select
+        a.id aid,
+        a.title atitle,
+        a.publishDate,
+        a.count,
+        a.coverImg,
+        a.star,
+        a.author,
+        a.broadCast,
+        a.brief,
+        a.publishDate,
+        c.*
+       from t_album a left join t_chapter c on a.id=c.album_id
+       limit #{start},#{rows}
+    </select>
+
+    <!-- 查询总条数 -->
+    <select id="findTotals" resultType="long">
+        select count(m.id) from t_chapter a inner join t_album m
+       on a.album_id = m.id
+    </select>
+
+
+
+
+</mapper>

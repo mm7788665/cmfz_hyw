@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.ChapterDAO">
+
+
+    <!-- 添加 -->
+    <insert id="insert" parameterType="Chapter">
+        insert into t_chapter values(#{id},#{title},#{size},#{duration},#{downPath},#{uploadTime},#{album_id})
+    </insert>
+
+    <!-- 查询 -->
+    <select id="query" resultType="Chapter">
+        select * from t_chapter
+    </select>
+    <!--修改-->
+    <update id="update" parameterType="Chapter">
+          update t_chapter set id=#{id},title=#{title},size=#{size},duration=#{duration},downPath=#{downPath},uploadTime=#{uploadTime} where id=#{id}
+    </update>
+    <!-- 分页查询 -->
+    <select id="findByPage" resultType="Chapter">
+       select * from t_chapter limit #{start},#{rows}
+    </select>
+
+    <!-- 查询总条数 -->
+    <select id="findTotals" resultType="long">
+       select count(id) from t_chapter
+    </select>
+
+
+    <!-- 删除 -->
+    <delete id="delete" parameterType="Banner">
+        delete from t_chapter where id=#{id}
+    </delete>
+
+
+</mapper>
